@@ -1,0 +1,75 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2' // or a later version
+    }
+}
+    
+
+    buildscript {
+        repositories {
+            mavenLocal()
+            mavenCentral()
+            gradlePluginPortal()
+            maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+            google()
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:4.2.2'
+            classpath 'com.google.gms:google-services:4.3.10'
+            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+            classpath 'com.google.firebase:perf-plugin:1.4.0'
+            classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.1'
+            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21'
+        }
+    }
+
+    allprojects {
+        apply plugin: "eclipse"
+
+        version = '1.0'
+        ext {
+            appName = "Really Bad Tetris"
+            gdxVersion = '1.12.0'
+            roboVMVersion = '2.3.20'
+            box2DLightsVersion = '1.5'
+            ashleyVersion = '1.7.4'
+            aiVersion = '1.8.2'
+            gdxControllersVersion = '2.2.1'
+        }
+
+        repositories {
+            mavenLocal()
+            mavenCentral()
+            google()
+            gradlePluginPortal()
+            maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+            maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+            maven { url "https://jitpack.io" }
+        }
+    }
+
+    project(":desktop") {
+        apply plugin: "java-library"
+
+
+        dependencies {
+            implementation project(":core")
+            api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+            api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+            api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+            
+        }
+    }
+
+    project(":core") {
+        apply plugin: "java-library"
+
+
+        dependencies {
+            api "com.badlogicgames.gdx:gdx:$gdxVersion"
+            api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        }
+    }
